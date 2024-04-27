@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2024 a las 15:54:00
+-- Tiempo de generación: 27-04-2024 a las 11:12:14
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,6 +28,8 @@ USE `far far west inc.`;
 --
 -- Estructura de tabla para la tabla `cliente`
 --
+-- Creación: 24-04-2024 a las 09:01:10
+--
 
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
@@ -37,10 +39,43 @@ CREATE TABLE `cliente` (
   `id_pedido_fav` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `cliente`:
+--   `dni`
+--       `persona` -> `DNI`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ingrediente`
+--
+-- Creación: 27-04-2024 a las 09:09:09
+--
+
+DROP TABLE IF EXISTS `ingrediente`;
+CREATE TABLE `ingrediente` (
+  `id_ingrediente` int(11) NOT NULL,
+  `id_plato` int(11) NOT NULL,
+  `id_sucursal` int(11) NOT NULL,
+  `tipo_producto` enum('carnes','pescados','lacteos','verduras','otros') NOT NULL,
+  `stock` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `ingrediente`:
+--   `id_plato`
+--       `plato` -> `id_plato`
+--   `id_sucursal`
+--       `sucursales` -> `id_sucursal`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `persona`
+--
+-- Creación: 23-04-2024 a las 22:32:10
 --
 
 DROP TABLE IF EXISTS `persona`;
@@ -53,10 +88,16 @@ CREATE TABLE `persona` (
   `telefono` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `persona`:
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `plato`
+--
+-- Creación: 24-04-2024 a las 12:47:41
 --
 
 DROP TABLE IF EXISTS `plato`;
@@ -68,10 +109,16 @@ CREATE TABLE `plato` (
   `tipo_plato` enum('Bebidas','Postres','Plato Principal','Plato Secundario') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `plato`:
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `proveedor`
+--
+-- Creación: 24-04-2024 a las 12:43:00
 --
 
 DROP TABLE IF EXISTS `proveedor`;
@@ -82,10 +129,18 @@ CREATE TABLE `proveedor` (
   `telefono` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `proveedor`:
+--   `id_sucursal`
+--       `sucursales` -> `id_sucursal`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `reserva`
+--
+-- Creación: 24-04-2024 a las 12:13:02
 --
 
 DROP TABLE IF EXISTS `reserva`;
@@ -97,10 +152,20 @@ CREATE TABLE `reserva` (
   `fecha_pago` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `reserva`:
+--   `id_cliente`
+--       `cliente` -> `id_cliente`
+--   `id_sucursal`
+--       `sucursales` -> `id_sucursal`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `sucursales`
+--
+-- Creación: 24-04-2024 a las 10:34:17
 --
 
 DROP TABLE IF EXISTS `sucursales`;
@@ -113,10 +178,16 @@ CREATE TABLE `sucursales` (
   `horario` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `sucursales`:
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `trabajador`
+--
+-- Creación: 24-04-2024 a las 11:14:24
 --
 
 DROP TABLE IF EXISTS `trabajador`;
@@ -128,10 +199,20 @@ CREATE TABLE `trabajador` (
   `cargo` enum('Jefe','Chef','Camarero','Repartidor') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELACIONES PARA LA TABLA `trabajador`:
+--   `dni`
+--       `persona` -> `DNI`
+--   `id_sucursal`
+--       `sucursales` -> `id_sucursal`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
+--
+-- Creación: 24-04-2024 a las 07:04:32
 --
 
 DROP TABLE IF EXISTS `usuario`;
@@ -144,6 +225,12 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `usuario`:
+--   `dni`
+--       `persona` -> `DNI`
+--
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -153,6 +240,14 @@ CREATE TABLE `usuario` (
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id_cliente`),
   ADD KEY `dni` (`dni`);
+
+--
+-- Indices de la tabla `ingrediente`
+--
+ALTER TABLE `ingrediente`
+  ADD PRIMARY KEY (`id_ingrediente`),
+  ADD KEY `id_plato` (`id_plato`,`id_sucursal`),
+  ADD KEY `id_sucursal` (`id_sucursal`);
 
 --
 -- Indices de la tabla `persona`
@@ -214,6 +309,12 @@ ALTER TABLE `cliente`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `ingrediente`
+--
+ALTER TABLE `ingrediente`
+  MODIFY `id_ingrediente` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `plato`
 --
 ALTER TABLE `plato`
@@ -258,6 +359,13 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`dni`) REFERENCES `persona` (`DNI`);
+
+--
+-- Filtros para la tabla `ingrediente`
+--
+ALTER TABLE `ingrediente`
+  ADD CONSTRAINT `ingrediente_ibfk_1` FOREIGN KEY (`id_plato`) REFERENCES `plato` (`id_plato`),
+  ADD CONSTRAINT `ingrediente_ibfk_2` FOREIGN KEY (`id_sucursal`) REFERENCES `sucursales` (`id_sucursal`);
 
 --
 -- Filtros para la tabla `proveedor`
