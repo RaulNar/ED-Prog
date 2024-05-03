@@ -54,7 +54,7 @@ public class Cliente extends Persona implements CRUD {
 				Integer favorite = resultset.getInt("id_pedido_fav");
 
 				System.out.println(ndi + "\t" + name + "\t" + surname + "\t" + age + "\t" + address + "\t" + telephone
-						+ "\t" + id + "\t" + reserved + "\t" + favorite);
+						+ "\t" + id + "\t" + reserved + "\t" + favorite + "\n");
 			}
 			// For security reasons, we close connections.
 			resultset.close();

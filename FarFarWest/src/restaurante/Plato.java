@@ -49,7 +49,7 @@ public class Plato implements CRUD {// Una clase que opera sobre la tabla plato.
 				String name = resultset.getString("nombre_plato");
 				String description = resultset.getString("descripcion");
 				Float price = resultset.getFloat("precio_plato");
-				System.out.println(id + "\t" + type + "\t" + name + "\t" + description + "\t" + price);
+				System.out.println(id + "\t" + type + "\t" + name + "\t" + description + "\t" + price + "\n");
 			}
 			// For security reasons, we close connections.
 			resultset.close();
@@ -67,8 +67,9 @@ public class Plato implements CRUD {// Una clase que opera sobre la tabla plato.
 		try {
 			Connection conn = DriverManager.getConnection(url, "root", "");
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO plato " + "VALUES ('" + this.id_plato + "','" + this.tipo_plato + "','"
-					+ this.nombre_plato + "'," + this.descripcion + ",'" + this.precio_plato + ")");
+			st.executeUpdate("INSERT INTO plato (tipo_plato, nombre_plato, descripcion, precio_plato)" + "VALUES ('"
+					+ this.tipo_plato + "','" + this.nombre_plato + "','" + this.descripcion + "'," + this.precio_plato
+					+ ")");
 			// For security reasons, we close connections.
 			conn.close();
 			st.close();
@@ -91,6 +92,7 @@ public class Plato implements CRUD {// Una clase que opera sobre la tabla plato.
 			conn.close();
 			ps.close();
 		} catch (Exception e) {
+			System.out.println("No se puede realizar el borrado de la tabla.");
 			e.printStackTrace();
 		}
 
@@ -106,13 +108,15 @@ public class Plato implements CRUD {// Una clase que opera sobre la tabla plato.
 			ps.executeUpdate();
 			// Aquí empieza el insert.
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO plato " + "VALUES ('" + this.id_plato + "','" + this.tipo_plato + "','"
-					+ this.nombre_plato + "'," + this.descripcion + ",'" + this.precio_plato + ")");
+			st.executeUpdate("INSERT INTO plato (tipo_plato, nombre_plato, descripcion, precio_plato)" + "VALUES ('"
+					+ this.tipo_plato + "','" + this.nombre_plato + "','" + this.descripcion + "'," + this.precio_plato
+					+ ")");
 			// For security reasons, we close connections.
 			conn.close();
 			ps.close();
 			st.close();
 		} catch (Exception e) {
+			System.out.println("No se ha podido updatear la tabla.");
 			e.printStackTrace();
 		}
 	}

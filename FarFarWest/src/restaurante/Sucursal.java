@@ -56,7 +56,8 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
 				Integer telephone = resultset.getInt("telefono");
 				String em = resultset.getString("email");
 				String horario = resultset.getString("horario_apertura");
-				System.out.println(id + "\t" + name + "\t" + address + "\t" + telephone + "\t" + em + "\t" + horario);
+				System.out.println(
+						id + "\t" + name + "\t" + address + "\t" + telephone + "\t" + em + "\t" + horario + "\n");
 			}
 			// For security reasons, we close connections.
 			resultset.close();
@@ -74,9 +75,9 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
 		try {
 			Connection conn = DriverManager.getConnection(url, "root", "");
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO sucursal " + "VALUES ('" + this.id_sucursal + "','" + this.nombre_sucursal
-					+ "','" + this.direccion + "'," + this.telefono + ",'" + this.email + "'," + this.horario_apertura
-					+ ")");
+			st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
+					+ "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
+					+ this.email + "','" + this.horario_apertura + "')");
 			// For security reasons, we close connections.
 			conn.close();
 			st.close();
@@ -113,9 +114,9 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
 			ps.setInt(1, this.id_sucursal);
 			ps.executeUpdate();
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO persona " + "VALUES ('" + this.id_sucursal + "','" + this.nombre_sucursal
-					+ "','" + this.direccion + "'," + this.telefono + ",'" + this.email + "'," + this.horario_apertura
-					+ ")");
+			st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
+					+ "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
+					+ this.email + "','" + this.horario_apertura + "')");
 			System.out.println("Borrado correctamente.");
 			// For security reasons, we close connections.
 			conn.close();
