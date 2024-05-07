@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2024 a las 12:10:56
+-- Tiempo de generación: 07-05-2024 a las 22:25:36
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `far far west inc.`
 --
+CREATE DATABASE IF NOT EXISTS `far far west inc.` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `far far west inc.`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `cliente`
 --
 
+DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
   `dni` varchar(9) NOT NULL,
@@ -37,24 +40,10 @@ CREATE TABLE `cliente` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `factura`
---
-
-CREATE TABLE `factura` (
-  `id_factura` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `id_pago` int(11) NOT NULL,
-  `id_sucursal` int(11) NOT NULL,
-  `fecha_factura` date NOT NULL,
-  `monto_total` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `ingrediente`
 --
 
+DROP TABLE IF EXISTS `ingrediente`;
 CREATE TABLE `ingrediente` (
   `id_ingrediente` int(11) NOT NULL,
   `id_plato` int(11) NOT NULL,
@@ -66,52 +55,10 @@ CREATE TABLE `ingrediente` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `linea_pedido`
---
-
-CREATE TABLE `linea_pedido` (
-  `id_linea_pedido` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `id_plato` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `cantidad` int(2) UNSIGNED NOT NULL,
-  `precio_total` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pago`
---
-
-CREATE TABLE `pago` (
-  `id_pago` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `nº_tarjeta` int(20) NOT NULL,
-  `fecha_pago` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pedido`
---
-
-CREATE TABLE `pedido` (
-  `id_pedido` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `servidor` int(11) NOT NULL,
-  `direccion` varchar(30) NOT NULL,
-  `precio_pedido` float NOT NULL,
-  `fecha` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `persona`
 --
 
+DROP TABLE IF EXISTS `persona`;
 CREATE TABLE `persona` (
   `DNI` varchar(9) NOT NULL,
   `nombre` varchar(30) NOT NULL,
@@ -127,6 +74,7 @@ CREATE TABLE `persona` (
 -- Estructura de tabla para la tabla `plato`
 --
 
+DROP TABLE IF EXISTS `plato`;
 CREATE TABLE `plato` (
   `id_plato` int(11) NOT NULL,
   `nombre_plato` int(20) NOT NULL,
@@ -141,6 +89,7 @@ CREATE TABLE `plato` (
 -- Estructura de tabla para la tabla `proveedor`
 --
 
+DROP TABLE IF EXISTS `proveedor`;
 CREATE TABLE `proveedor` (
   `id_proveedor` int(11) NOT NULL,
   `id_sucursal` int(11) NOT NULL,
@@ -154,6 +103,7 @@ CREATE TABLE `proveedor` (
 -- Estructura de tabla para la tabla `reserva`
 --
 
+DROP TABLE IF EXISTS `reserva`;
 CREATE TABLE `reserva` (
   `id_reserva` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
@@ -168,6 +118,7 @@ CREATE TABLE `reserva` (
 -- Estructura de tabla para la tabla `sucursales`
 --
 
+DROP TABLE IF EXISTS `sucursales`;
 CREATE TABLE `sucursales` (
   `id_sucursal` int(11) NOT NULL,
   `nombre_sucursal` int(20) NOT NULL,
@@ -183,6 +134,7 @@ CREATE TABLE `sucursales` (
 -- Estructura de tabla para la tabla `trabajador`
 --
 
+DROP TABLE IF EXISTS `trabajador`;
 CREATE TABLE `trabajador` (
   `id_trabjador` int(11) NOT NULL,
   `dni` varchar(9) NOT NULL,
@@ -197,8 +149,9 @@ CREATE TABLE `trabajador` (
 -- Estructura de tabla para la tabla `usuario`
 --
 
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
-  `id_factura` int(10) NOT NULL,
+  `id_usuario` int(10) NOT NULL,
   `dni` varchar(9) NOT NULL,
   `contraseña` char(20) NOT NULL,
   `permisos` int(10) NOT NULL,
@@ -217,46 +170,12 @@ ALTER TABLE `cliente`
   ADD KEY `dni` (`dni`);
 
 --
--- Indices de la tabla `factura`
---
-ALTER TABLE `factura`
-  ADD PRIMARY KEY (`id_factura`),
-  ADD KEY `id_pedido` (`id_pedido`),
-  ADD KEY `id_sucursal` (`id_sucursal`),
-  ADD KEY `id_pago` (`id_pago`);
-
---
 -- Indices de la tabla `ingrediente`
 --
 ALTER TABLE `ingrediente`
   ADD PRIMARY KEY (`id_ingrediente`),
   ADD KEY `id_plato` (`id_plato`,`id_sucursal`),
   ADD KEY `id_sucursal` (`id_sucursal`);
-
---
--- Indices de la tabla `linea_pedido`
---
-ALTER TABLE `linea_pedido`
-  ADD PRIMARY KEY (`id_linea_pedido`),
-  ADD KEY `id_cliente` (`id_cliente`),
-  ADD KEY `id_plato` (`id_plato`),
-  ADD KEY `id_pedido` (`id_pedido`);
-
---
--- Indices de la tabla `pago`
---
-ALTER TABLE `pago`
-  ADD PRIMARY KEY (`id_pago`),
-  ADD KEY `id_pedido` (`id_pedido`);
-
---
--- Indices de la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `id_cliente` (`id_cliente`),
-  ADD KEY `servidor` (`servidor`),
-  ADD KEY `servidor_2` (`servidor`);
 
 --
 -- Indices de la tabla `persona`
@@ -304,7 +223,7 @@ ALTER TABLE `trabajador`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_factura`),
+  ADD PRIMARY KEY (`id_usuario`),
   ADD KEY `dni` (`dni`);
 
 --
@@ -318,22 +237,10 @@ ALTER TABLE `cliente`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `factura`
---
-ALTER TABLE `factura`
-  MODIFY `id_factura` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `ingrediente`
 --
 ALTER TABLE `ingrediente`
   MODIFY `id_ingrediente` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pago`
---
-ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `plato`
@@ -369,7 +276,7 @@ ALTER TABLE `trabajador`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_factura` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -382,39 +289,11 @@ ALTER TABLE `cliente`
   ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`dni`) REFERENCES `persona` (`DNI`);
 
 --
--- Filtros para la tabla `factura`
---
-ALTER TABLE `factura`
-  ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`id_pago`) REFERENCES `pago` (`id_pago`),
-  ADD CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`id_sucursal`) REFERENCES `sucursales` (`id_sucursal`);
-
---
 -- Filtros para la tabla `ingrediente`
 --
 ALTER TABLE `ingrediente`
   ADD CONSTRAINT `ingrediente_ibfk_1` FOREIGN KEY (`id_plato`) REFERENCES `plato` (`id_plato`),
   ADD CONSTRAINT `ingrediente_ibfk_2` FOREIGN KEY (`id_sucursal`) REFERENCES `sucursales` (`id_sucursal`);
-
---
--- Filtros para la tabla `linea_pedido`
---
-ALTER TABLE `linea_pedido`
-  ADD CONSTRAINT `lineaPedido_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lineaPedido_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lineaPedido_plato` FOREIGN KEY (`id_plato`) REFERENCES `plato` (`id_plato`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `pago`
---
-ALTER TABLE `pago`
-  ADD CONSTRAINT `pago_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sercidor_trabajador` FOREIGN KEY (`servidor`) REFERENCES `trabajador` (`id_trabjador`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `proveedor`
