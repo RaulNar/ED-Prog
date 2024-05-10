@@ -1,0 +1,15 @@
+package Tests;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Calculadora cal1 = new Calculadora();
+
+		System.out.println(cal1.sumar(2F, 3F));
+		System.out.println(cal1.restar(2F, 3F));
+		System.out.println(cal1.multiplicar(2F, 3F));
+		System.out.println(cal1.dividir(2F, 3F));
+	}
+
+}

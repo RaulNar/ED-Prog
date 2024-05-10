@@ -1,0 +1,40 @@
+package Tests;
+
+public class Calculadora {
+
+	public Float sumar(Float factor1, Float factor2) {
+
+		Float resultado = factor1 + factor2;
+
+		return resultado;
+	}
+
+	public Float restar(Float factor1, Float factor2) {
+
+		Float resultado = factor1 - factor2;
+
+		return resultado;
+	}
+
+	public Float multiplicar(Float factor1, Float factor2) {
+
+		Float resultado = factor1 * factor2;
+
+		return resultado;
+	}
+
+	public Float dividir(Float factor1, Float factor2) {
+
+		if (factor2 == 0) {
+
+			Float resultado = 0.0f;
+			return resultado;
+
+		} else {
+
+			return  (factor1 / factor2);
+
+		}
+	}
+
+}

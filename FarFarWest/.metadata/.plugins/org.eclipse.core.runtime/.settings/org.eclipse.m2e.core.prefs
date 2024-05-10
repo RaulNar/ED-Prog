@@ -1,0 +1,8 @@
+eclipse.m2.defaultRuntime=apache-maven-3.9.6 dev
+eclipse.m2.globalSettingsFile=C\:\\DEV\\CORE\\Apache\\Maven\\VERSION\\apache-maven-3.9.6\\conf\\settings.xml
+eclipse.m2.runtimes=apache-maven-3.9.6 dev
+eclipse.m2.runtimesNodes/apache-maven-3.9.6\ dev/location=C\:\\DEV\\CORE\\Apache\\Maven\\VERSION\\apache-maven-3.9.6
+eclipse.m2.runtimesNodes/apache-maven-3.9.6\ dev/type=EXTERNAL
+eclipse.m2.userSettingsFile=C\:\\DEV\\CORE\\Apache\\Maven\\VERSION\\apache-maven-3.9.6\\conf\\settings.xml
+eclipse.m2.userToolchainsFile=C\:\\DEV\\CORE\\Apache\\Maven\\VERSION\\apache-maven-3.9.6\\conf\\toolchains.xml
+eclipse.preferences.version=1

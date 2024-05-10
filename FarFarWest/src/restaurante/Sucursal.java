@@ -131,7 +131,7 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
 	// A method that shows attributes from object Persona through console.
 	public void mostrar() {// Un método para mostrar los atributos actuales de la clase sucursal. El query
 							// almacena una consulta simple.
-		System.out.println("id_sucursal: " + this.id_sucursal + ", nomobre: " + this.nombre_sucursal + ", dirección: "
+		System.out.println("id_sucursal: " + this.id_sucursal + ", nombre: " + this.nombre_sucursal + ", dirección: "
 				+ this.direccion + ", teléfono: " + this.telefono + ", email: " + this.email + ", horario de apertura: "
 				+ this.horario_apertura);
 	}

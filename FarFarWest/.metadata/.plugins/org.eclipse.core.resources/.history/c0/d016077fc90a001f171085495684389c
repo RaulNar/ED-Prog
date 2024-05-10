@@ -1,0 +1,12 @@
+package Tests;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Calculadora cal1 = new Calculadora();
+		
+		System.out.println(cal1.sumar(2F, 3F));
+	}
+
+}
