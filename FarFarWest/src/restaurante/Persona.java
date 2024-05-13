@@ -9,7 +9,7 @@ package restaurante;
 public class Persona {
 
 	// Attributes
-	protected String dni;
+	protected String DNI;
 
 	protected String nombre;
 
@@ -23,11 +23,62 @@ public class Persona {
 
 	// Builders
 	public Persona(String ind, String name, String surname, Integer age, String address, Integer telephone) {
-		this.dni = ind;
+		this.DNI = ind;
 		this.nombre = name;
 		this.apellido = surname;
 		this.edad = age;
 		this.direccion = address;
 		this.telefono = telephone;
 	}
+	
+    public Persona(){
+    }
+    public void setDni(String dni) {
+        this.DNI = dni;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDni() {
+        return DNI;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public Integer getTelefono() {
+        return telefono;
+    }
 }
+

@@ -8,186 +8,190 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursal.
-	// Attributes
-	protected Integer id_sucursal;
+    // Attributes
+    protected Integer id_sucursal;
 
-	protected String nombre_sucursal;
+    protected String nombre_sucursal;
 
-	protected String direccion;
+    protected String direccion;
 
-	protected Integer telefono;
+    protected Integer telefono;
 
-	protected String email;
+    protected String email;
 
-	protected String horario_apertura;
+    protected String horario;
 
-	// Constant used in connection.
-	final String url = "jdbc:mysql://localhost:3306/far far west inc.";
+    // Constant used in connection.
+    final String url = "jdbc:mysql://localhost:3306/far_far_west_inc_";
 
-	// Builders
-	public Sucursal(Integer id, String name, String address, Integer telephone, String em, String horario) {
-		this.id_sucursal = id;
-		this.nombre_sucursal = name;
-		this.direccion = address;
-		this.telefono = telephone;
-		this.email = em;
-		this.horario_apertura = horario;
-	}
+    // Builders
+    public Sucursal(Integer id, String name, String address, Integer telephone, String em, String horario) {
+        this.id_sucursal = id;
+        this.nombre_sucursal = name;
+        this.direccion = address;
+        this.telefono = telephone;
+        this.email = em;
+        this.horario= horario;
+    }
 
-	// CRUD Methods
-	/**
-	 * 
-	 */
-	@Override
-	public void read() {// Un read mucho más simple que el de clase cliente, pero de la sucursal, aquí
-						// no hay left joins.
-		try (Connection connection = DriverManager.getConnection(url, "root", "");
-				// Creamos el objeto Statement que nos permitirá realizar Querys
-				Statement statement = connection.createStatement();
-				// A raiz del Statemet, obtenemos el resultado del executeQuery en un resultset
-				ResultSet resultset = statement.executeQuery("SELECT * FROM sucursal")) {
-			// Ahora, por cada fila el resultset, realizamos las operaciones
-			// correspondientes.
-			while (resultset.next()) {
+    public Sucursal() {
+    }
 
-				Integer id = resultset.getInt("id_sucursal");
-				String name = resultset.getString("nombre");
-				String address = resultset.getString("direccion");
-				Integer telephone = resultset.getInt("telefono");
-				String em = resultset.getString("email");
-				String horario = resultset.getString("horario_apertura");
-				System.out.println(
-						id + "\t" + name + "\t" + address + "\t" + telephone + "\t" + em + "\t" + horario + "\n");
-			}
-			// For security reasons, we close connections.
-			resultset.close();
-			statement.close();
-			connection.close();
-		} catch (SQLException e) {
-			System.out.println("Error en la conexión de la base de datos");
-			e.printStackTrace();
-		}
+    // CRUD Methods
+    /**
+     *
+     */
+    @Override
+    public void read() {// Un read mucho más simple que el de clase cliente, pero de la sucursal, aquí
+        // no hay left joins.
+        try (Connection connection = DriverManager.getConnection(url, "root", "");
+             // Creamos el objeto Statement que nos permitirá realizar Querys
+             Statement statement = connection.createStatement();
+             // A raiz del Statemet, obtenemos el resultado del executeQuery en un resultset
+             ResultSet resultset = statement.executeQuery("SELECT * FROM sucursal")) {
+            // Ahora, por cada fila el resultset, realizamos las operaciones
+            // correspondientes.
+            while (resultset.next()) {
 
-	}
+                Integer id = resultset.getInt("id_sucursal");
+                String name = resultset.getString("nombre");
+                String address = resultset.getString("direccion");
+                Integer telephone = resultset.getInt("telefono");
+                String em = resultset.getString("email");
+                String horario = resultset.getString("horario");
+                System.out.println(
+                        id + "\t" + name + "\t" + address + "\t" + telephone + "\t" + em + "\t" + horario + "\n");
+            }
+            // For security reasons, we close connections.
+            resultset.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error en la conexión de la base de datos");
+            e.printStackTrace();
+        }
 
-	@Override
-	public void insert() {// un insert sobre sucursal simple de un solo try catch.
-		try {
-			Connection conn = DriverManager.getConnection(url, "root", "");
-			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
-					+ "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
-					+ this.email + "','" + this.horario_apertura + "')");
-			// For security reasons, we close connections.
-			conn.close();
-			st.close();
-		} catch (Exception e) {
-			System.err.println("Got an exception! ");
-			System.err.println(e.getMessage());
-		}
+    }
 
-	}
+    @Override
+    public void insert() {// un insert sobre sucursal simple de un solo try catch.
+        try {
+            Connection conn = DriverManager.getConnection(url, "root", "");
+            Statement st = conn.createStatement();
+            st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
+                    + "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
+                    + this.email + "','" + this.horario + "')");
+            // For security reasons, we close connections.
+            conn.close();
+            st.close();
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
 
-	@Override
-	public void delete() {// Un delete simple.
-		try {
-			Connection conn = DriverManager.getConnection(url, "root", "");
-			String query = "delete from sucursal where dni=? ";
-			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1, this.id_sucursal);
-			ps.executeUpdate();
-			// For security reasons, we close connections.
-			conn.close();
-			ps.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    }
 
-	}
+    @Override
+    public void delete() {// Un delete simple.
+        try {
+            Connection conn = DriverManager.getConnection(url, "root", "");
+            String query = "delete from sucursal where dni=? ";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, this.id_sucursal);
+            ps.executeUpdate();
+            // For security reasons, we close connections.
+            conn.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	@Override
-	public void update() {// update es un delete y un insert en try catch separados.
-		try {
-			Connection conn = DriverManager.getConnection(url, "root", "");
-			String query = "delete from sucursal where id=? ";
-			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setInt(1, this.id_sucursal);
-			ps.executeUpdate();
-			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
-					+ "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
-					+ this.email + "','" + this.horario_apertura + "')");
-			System.out.println("Borrado correctamente.");
-			// For security reasons, we close connections.
-			conn.close();
-			ps.close();
-			st.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    }
 
-	}
+    @Override
+    public void update() {// update es un delete y un insert en try catch separados.
+        try {
+            Connection conn = DriverManager.getConnection(url, "root", "");
+            String query = "delete from sucursal where id=? ";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, this.id_sucursal);
+            ps.executeUpdate();
+            Statement st = conn.createStatement();
+            st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
+                    + "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
+                    + this.email + "','" + this.horario+ "')");
+            System.out.println("Borrado correctamente.");
+            // For security reasons, we close connections.
+            conn.close();
+            ps.close();
+            st.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	// A method that shows attributes from object Persona through console.
-	public void mostrar() {// Un método para mostrar los atributos actuales de la clase sucursal. El query
-							// almacena una consulta simple.
-		System.out.println("id_sucursal: " + this.id_sucursal + ", nombre: " + this.nombre_sucursal + ", dirección: "
-				+ this.direccion + ", teléfono: " + this.telefono + ", email: " + this.email + ", horario de apertura: "
-				+ this.horario_apertura);
-	}
+    }
 
-	// Getters
-	public Integer getId_sucursal() {
-		return this.id_sucursal;
-	}
+    // A method that shows attributes from object Persona through console.
+    public void mostrar() {// Un método para mostrar los atributos actuales de la clase sucursal. El query
+        // almacena una consulta simple.
+        System.out.println("id_sucursal: " + this.id_sucursal + ", nombre: " + this.nombre_sucursal + ", dirección: "
+                + this.direccion + ", teléfono: " + this.telefono + ", email: " + this.email + ", horario de apertura: "
+                + this.horario);
+    }
 
-	public String getNombre() {
-		return this.nombre_sucursal;
-	}
+    // Getters
+    public Integer getId_sucursal() {
+        return this.id_sucursal;
+    }
 
-	public String getDireccion() {
-		return this.direccion;
-	}
+    public String getNombre() {
+        return this.nombre_sucursal;
+    }
 
-	public Integer getTelefono() {
-		return this.telefono;
-	}
+    public String getDireccion() {
+        return this.direccion;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    public Integer getTelefono() {
+        return this.telefono;
+    }
 
-	public String getHorario() {
-		return this.horario_apertura;
-	}
+    public String getEmail() {
+        return this.email;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public String getHorario() {
+        return this.horario;
+    }
 
-	// Setters
-	public void setId_sucursal(Integer id) {
-		this.id_sucursal = id;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre_sucursal = nombre;
-	}
+    // Setters
+    public void setId_sucursal(Integer id) {
+        this.id_sucursal = id;
+    }
 
-	public void setDireccion(String address) {
-		this.direccion = address;
-	}
+    public void setNombre(String nombre) {
+        this.nombre_sucursal = nombre;
+    }
 
-	public void setTelefono(Integer telephone) {
-		this.telefono = telephone;
-	}
+    public void setDireccion(String address) {
+        this.direccion = address;
+    }
 
-	public void setEmail(String em) {
-		this.email = em;
-	}
+    public void setTelefono(Integer telephone) {
+        this.telefono = telephone;
+    }
 
-	public void setHorario(String time) {
-		this.horario_apertura = time;
-	}
+    public void setEmail(String em) {
+        this.email = em;
+    }
+
+    public void setHorario(String time) {
+        this.horario = time;
+    }
 
 }
+

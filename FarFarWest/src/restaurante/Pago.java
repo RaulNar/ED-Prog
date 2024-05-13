@@ -20,12 +20,10 @@ public class Pago implements CRUD{
 	// Attributes
 	
 			protected Integer id_pago;
-
-			protected Tipo_pago tipo_pago;
 			
-			protected Date fecha_factura;
+			protected Integer id_pedido;
 			
-			protected String n_tarjeta;
+			protected String nº_tarjeta;
 			
 			protected Date fecha_pago;
 			
@@ -33,18 +31,21 @@ public class Pago implements CRUD{
 			
 	// Constant used in connection.
 			
-			final String url = "jdbc:mysql://localhost:3306/far far west inc.";
-
+			final String url = "jdbc:mysql://localhost:3306/far_far_west_inc_";
 
 	// Builders
 			
-	public Pago(Integer id_pago, Tipo_pago tipo_pago, Date fecha_factura, String n_tarjeta, Date fecha_pago) {
+	public Pago(Integer id_pago,Integer id_pedido, String nº_tarjeta, Date fecha_pago) {
 		this.id_pago = id_pago;
-		this.tipo_pago = tipo_pago;
-		this.fecha_factura = fecha_factura;
-		this.n_tarjeta = n_tarjeta;
+		this.id_pedido = id_pedido;
+		this.nº_tarjeta = nº_tarjeta;
 		this.fecha_pago = fecha_pago;
 	}
+	
+
+	public Pago() {
+		
+    }
 
 
 	//Getter
@@ -53,19 +54,13 @@ public class Pago implements CRUD{
 		return id_pago;
 	}
 
-
-	public Tipo_pago getTipo_pago() {
-		return tipo_pago;
-	}
-
-
-	public Date getFecha_factura() {
-		return fecha_factura;
+	public Integer getId_pedido() {
+		return id_pedido;
 	}
 
 
 	public String getN_tarjeta() {
-		return n_tarjeta;
+		return nº_tarjeta;
 	}
 
 
@@ -79,20 +74,13 @@ public class Pago implements CRUD{
 	public void setId_pago(Integer id_pago) {
 		this.id_pago = id_pago;
 	}
-
-
-	public void setTipo_pago(Tipo_pago tipo_pago) {
-		this.tipo_pago = tipo_pago;
+	
+	public void setId_pedido(Integer id_pedido) {
+		this.id_pedido = id_pedido;
 	}
-
-
-	public void setFecha_factura(Date fecha_factura) {
-		this.fecha_factura = fecha_factura;
-	}
-
 
 	public void setN_tarjeta(String n_tarjeta) {
-		this.n_tarjeta = n_tarjeta;
+		this.nº_tarjeta = n_tarjeta;
 	}
 
 
@@ -107,17 +95,16 @@ public class Pago implements CRUD{
 					// Creamos el objeto Statement que nos permitirá realizar Querys
 					Statement statement = connection.createStatement();
 					// A raiz del Statemet, obtenemos el resultado del executeQuery en un resultset
-					ResultSet resultset = statement.executeQuery("SELECT * FROM plato")) {
+					ResultSet resultset = statement.executeQuery("SELECT * FROM pago")) {
 				// Ahora, por cada fila el resultset, realizamos las operaciones
 				// correspondientes.
 				while (resultset.next()) {
 
 					Integer id = resultset.getInt("id_pago");
-					String tipo_pago = resultset.getString("tipo_pago");
-					Date fecha_factura  = resultset.getDate("fecha_factura");
-					String n_tarjeta = resultset.getString("n_tarjeta");
+					Integer id_pedido = resultset.getInt("id_pedido");
+					String n_tarjeta = resultset.getString("nº_tarjeta");
 					Date fecha_pago = resultset.getDate("fecha_pago");
-					System.out.println(id + "\t" + tipo_pago + "\t" + fecha_factura + "\t" + n_tarjeta + "\t" + fecha_pago + "\n");
+					System.out.println(id + "\t" + id_pedido + "\t" + n_tarjeta + "\t" + fecha_pago + "\n");
 				}
 				// For security reasons, we close connections.
 				resultset.close();
@@ -135,8 +122,8 @@ public class Pago implements CRUD{
 			try {
 				Connection conn = DriverManager.getConnection(url, "root", "");
 				Statement st = conn.createStatement();
-				st.executeUpdate("INSERT INTO plato (tipo_pago, fecha_factura, n_tarjeta, fecha_pago)" + "VALUES ('"
-						+ this.tipo_pago + "','" + this.fecha_factura + "','" + this.n_tarjeta + "'," + this.fecha_pago
+				st.executeUpdate("INSERT INTO pago (id_pedido, nº_tarjeta, fecha_pago)" + "VALUES ('"
+						+ this.id_pedido + "','" + this.nº_tarjeta + "'," + this.fecha_pago
 						+ ")");
 				// For security reasons, we close connections.
 				conn.close();
@@ -152,7 +139,7 @@ public class Pago implements CRUD{
 		public void delete() {// un try catch simple con una query de delete.
 			try {
 				Connection conn = DriverManager.getConnection(url, "root", "");
-				String query = "delete from plato where id=? ";
+				String query = "delete from pago where id=? ";
 				PreparedStatement ps = conn.prepareStatement(query);
 				ps.setInt(1, this.id_pago);
 				ps.executeUpdate();
@@ -170,14 +157,14 @@ public class Pago implements CRUD{
 		public void update() {// Un try catch doble, uno borra y otro inserta.
 			try {
 				Connection conn = DriverManager.getConnection(url, "root", "");
-				String query = "delete from plato where id=? ";
+				String query = "delete from pago where id=? ";
 				PreparedStatement ps = conn.prepareStatement(query);
 				ps.setInt(1, this.id_pago);
 				ps.executeUpdate();
 				// Aquí empieza el insert.
 				Statement st = conn.createStatement();
-				st.executeUpdate("INSERT INTO plato (tipo_pago, fecha_factura, n_tarjeta, fecha_pago)" + "VALUES ('"
-						+ this.tipo_pago + "','" + this.fecha_factura + "','" + this.n_tarjeta + "'," + this.fecha_pago +
+				st.executeUpdate("INSERT INTO pago (id_pedido, nº_tarjeta, fecha_pago)" + "VALUES ('"
+						+ this.id_pedido + "','" + this.nº_tarjeta + "'," + this.fecha_pago +
 						")");
 				// For security reasons, we close connections.
 				conn.close();
@@ -187,9 +174,15 @@ public class Pago implements CRUD{
 				System.out.println("No se ha podido updatear la tabla.");
 				e.printStackTrace();
 			}
-		}		
+			
+		}
 		
-
-	
+		//Function that pays an order.
+		public void pagar(Integer id_pedido){
+			this.setId_pedido(id_pedido);
+			this.setFecha_pago(new Date());
+			this.insert();
+		}
 			
 }
+
