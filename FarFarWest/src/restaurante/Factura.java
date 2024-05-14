@@ -197,5 +197,46 @@ public class Factura implements CRUD{
 		}
 	}		
 	
+	
+	/**
+	    * Method facturaCliente: Checks all bills related to a certain client.
+	    * @param name , a string that sets the name for witch the search will run through.
+	    */
+	   public void facturaCliente (String name) {
 
-}
+
+	       try (Connection connection = DriverManager.getConnection(url, "root", "");
+	            // Creamos el objeto Statement que nos permitirá realizar Querys
+	            Statement statement = connection.createStatement();
+	            // A raiz del Statemet, obtenemos el resultado del executeQuery en un resultset
+	            ResultSet resultset = statement.executeQuery("SELECT * FROM factura left join pedido on " +
+	                    "factura.id_pedido = pedido.id_pedido left join cliente on pedido.id_cliente = cliente.id_cliente " +
+	                    "left join persona on cliente.dni = persona.dni where persona.nombre ='" + name +"'")) {
+	           // Ahora, por cada fila el resultset, realizamos las operaciones
+	           // correspondientes.
+	           while (resultset.next()) {
+
+
+	               Integer id = resultset.getInt("id_factura");
+	               Integer idCliente = resultset.getInt("id_cliente");
+	               Integer idPago = resultset.getInt("id_Pago");
+	               Integer idSucursal = resultset.getInt("id_Sucursal");
+	               String date = resultset.getString("fecha_factura");
+	               Float finalPrice = resultset.getFloat("monto_total");
+	               System.out.println("Id de factura: "+ id + "\t" + "Id de cliente: " + idCliente +  "\t" + "Nombre de Cliente: "
+	                       + name +"\t" + "Id de sucursal: " + idSucursal + "\t" + "Id de pago: " + idPago + "\t" + "Fecha: "
+	                       + date + "\t" + "Monto total: " + finalPrice + "\n");
+	           }
+	           // For security reasons, we close connections.
+	           resultset.close();
+	           statement.close();
+	           connection.close();
+	       } catch (SQLException e) {
+	           System.out.println("Error en la conexión de la base de datos");
+	           e.printStackTrace();
+	       }
+	   }
+
+
+	}
+

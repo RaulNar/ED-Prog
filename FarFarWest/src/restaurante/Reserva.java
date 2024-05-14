@@ -16,7 +16,7 @@ public class Reserva implements CRUD {
     private Integer nombre_reserva;
 
     // Constant used in connection.
-    final String url = "jdbc:mysql://localhost:3306/far_far_west_inc_";
+    final String url = "jdbc:mysql://localhost:3306/far far west inc.";
 
     // Builders
     public Reserva(Integer id_reserva, Integer id_cliente, Integer id_sucursal, Integer fecha_hora, Integer nombre_reserva) {
@@ -26,11 +26,15 @@ public class Reserva implements CRUD {
         this.fecha_hora = fecha_hora;
         this.nombre_reserva = nombre_reserva;
     }
+    
+    
 
     public Reserva() {
-    }
+	}
 
-    @Override
+
+
+	@Override
     public void read() {
         try (Connection conn = DriverManager.getConnection(url, "root", "");
              Statement st = conn.createStatement();
@@ -136,3 +140,4 @@ public class Reserva implements CRUD {
         this.nombre_reserva = nombre_reserva;
     }
 }
+

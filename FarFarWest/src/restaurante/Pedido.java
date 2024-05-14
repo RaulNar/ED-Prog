@@ -61,9 +61,8 @@ public class Pedido implements CRUD{
                 Integer server = resultset.getInt("servidor");
                 String direccion = resultset.getString("direccion");
                 Float precio  = resultset.getFloat("precio_pedido");
-                Integer cantidad= resultset.getInt("cantidad");
                 String fecha = resultset.getString("fecha");
-                System.out.println(id + "\t" + direccion + "\t" + precio + "\t" + cantidad + "\t" + fecha + "\n");
+                System.out.println(id + "\t" + direccion + "\t" + precio + "\t" + fecha + "\n");
             }
             // For security reasons, we close connections.
             resultset.close();

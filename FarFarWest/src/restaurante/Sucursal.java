@@ -48,7 +48,7 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
              // Creamos el objeto Statement que nos permitirá realizar Querys
              Statement statement = connection.createStatement();
              // A raiz del Statemet, obtenemos el resultado del executeQuery en un resultset
-             ResultSet resultset = statement.executeQuery("SELECT * FROM sucursal")) {
+             ResultSet resultset = statement.executeQuery("SELECT * FROM sucursales")) {
             // Ahora, por cada fila el resultset, realizamos las operaciones
             // correspondientes.
             while (resultset.next()) {
@@ -78,7 +78,7 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
         try {
             Connection conn = DriverManager.getConnection(url, "root", "");
             Statement st = conn.createStatement();
-            st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
+            st.executeUpdate("INSERT INTO sucursales (nombre_sucursal, direccion, telefono, email, horario_apertura) "
                     + "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
                     + this.email + "','" + this.horario + "')");
             // For security reasons, we close connections.
@@ -95,7 +95,7 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
     public void delete() {// Un delete simple.
         try {
             Connection conn = DriverManager.getConnection(url, "root", "");
-            String query = "delete from sucursal where dni=? ";
+            String query = "delete from sucursales where dni=? ";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, this.id_sucursal);
             ps.executeUpdate();
@@ -112,12 +112,12 @@ public class Sucursal implements CRUD {// clase que opera sobre la tabla sucursa
     public void update() {// update es un delete y un insert en try catch separados.
         try {
             Connection conn = DriverManager.getConnection(url, "root", "");
-            String query = "delete from sucursal where id=? ";
+            String query = "delete from sucursales where id=? ";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, this.id_sucursal);
             ps.executeUpdate();
             Statement st = conn.createStatement();
-            st.executeUpdate("INSERT INTO sucursal (nombre_sucursal, direccion, telefono, email, horario_apertura) "
+            st.executeUpdate("INSERT INTO sucursales (nombre_sucursal, direccion, telefono, email, horario_apertura) "
                     + "VALUES ('" + this.nombre_sucursal + "','" + this.direccion + "'," + this.telefono + ",'"
                     + this.email + "','" + this.horario+ "')");
             System.out.println("Borrado correctamente.");

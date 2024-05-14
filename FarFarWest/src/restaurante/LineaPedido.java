@@ -17,7 +17,7 @@ public class LineaPedido implements CRUD {
     private Float precioTotal;
 
     // Constant used in connection.
-    final String url = "jdbc:mysql://localhost:3306/far_far_west_inc_";
+    final String url = "jdbc:mysql://localhost:3306/far far west inc.";
 
     // Builders
     public LineaPedido(Integer id_linea_pedido, Integer id_cliente, Integer id_plato, Integer id_pedido, Integer cantidad, Float precioTotal) {
@@ -30,9 +30,10 @@ public class LineaPedido implements CRUD {
     }
 
     public LineaPedido() {
-    }
+		
+	}
 
-    @Override
+	@Override
     public void read() {
         try (Connection conn = DriverManager.getConnection(url, "root", "");
              Statement st = conn.createStatement();
@@ -149,3 +150,4 @@ public class LineaPedido implements CRUD {
         this.precioTotal = precioTotal;
     }
 }
+

@@ -39,7 +39,7 @@ public class Cliente extends Persona implements CRUD {
              // A raiz del Statemet, obtenemos el resultado del executeQuery en un resultset.
              // He usado un left join para unir las dos tablas.
              ResultSet resultset = statement
-                     .executeQuery("SELECT * FROM persona left join cliente on persona.dni = cliente.dni")) {
+                     .executeQuery("SELECT * FROM cliente left join persona on persona.DNI = cliente.dni")) {
             // Ahora, por cada fila el resultset, realizamos las operaciones
             // correspondientes.
             while (resultset.next()) {

@@ -25,17 +25,17 @@ public class Pago implements CRUD{
 			
 			protected String nº_tarjeta;
 			
-			protected Date fecha_pago;
+			protected String fecha_pago;
 			
 			
 			
 	// Constant used in connection.
 			
-			final String url = "jdbc:mysql://localhost:3306/far_far_west_inc_";
+			final String url = "jdbc:mysql://localhost:3306/far_far_west_inc_";    
 
 	// Builders
 			
-	public Pago(Integer id_pago,Integer id_pedido, String nº_tarjeta, Date fecha_pago) {
+	public Pago(Integer id_pago,Integer id_pedido, String nº_tarjeta, String fecha_pago) {
 		this.id_pago = id_pago;
 		this.id_pedido = id_pedido;
 		this.nº_tarjeta = nº_tarjeta;
@@ -64,7 +64,7 @@ public class Pago implements CRUD{
 	}
 
 
-	public Date getFecha_pago() {
+	public String getFecha_pago() {
 		return fecha_pago;
 	}
 
@@ -84,7 +84,7 @@ public class Pago implements CRUD{
 	}
 
 
-	public void setFecha_pago(Date fecha_pago) {
+	public void setFecha_pago(String fecha_pago) {
 		this.fecha_pago = fecha_pago;
 	}
 		
@@ -103,7 +103,7 @@ public class Pago implements CRUD{
 					Integer id = resultset.getInt("id_pago");
 					Integer id_pedido = resultset.getInt("id_pedido");
 					String n_tarjeta = resultset.getString("nº_tarjeta");
-					Date fecha_pago = resultset.getDate("fecha_pago");
+					String fecha_pago = resultset.getString("fecha_pago");
 					System.out.println(id + "\t" + id_pedido + "\t" + n_tarjeta + "\t" + fecha_pago + "\n");
 				}
 				// For security reasons, we close connections.
@@ -179,8 +179,9 @@ public class Pago implements CRUD{
 		
 		//Function that pays an order.
 		public void pagar(Integer id_pedido){
+			Date fechaActual = new Date();
 			this.setId_pedido(id_pedido);
-			this.setFecha_pago(new Date());
+			this.setFecha_pago(fechaActual.toString());
 			this.insert();
 		}
 			

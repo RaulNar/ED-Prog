@@ -287,9 +287,9 @@ public class Logica {
 	          System.out.println("Introduzca el número asociado a las opciones para su ejecución:");
 	          System.out.println("1: Hacer un pedido: ");
 	          System.out.println("2: Consultar los platos de la carta: ");
-	          System.out.println("3: Rellenar sus datos: ");
+	          System.out.println("3: Rellenar datos del cliente: ");
 	          System.out.println("4: Pagar: ");
-	          System.out.println("5: Salir de la aplocación ");
+	          System.out.println("5: Salir de la aplicación ");
 	          comprobacion2 = Integer.parseInt(br2.readLine());
 	          comprobacion2 = unoCinco(comprobacion2);
 	
@@ -336,13 +336,30 @@ public class Logica {
 	                  break;
 	
 	              case 3:
-	
+	            	  
+	            	  String ingredient;
+	            	   Integer branch;
+	            	   System.out.println("Introduzca el nombre del ingresientes que quiera consultar");
+	            	   ingredient = br2.readLine();
+
+
+	            	   System.out.println("Introduzca el id (número entero) de la sucursal en la que quiera: ");
+	            	   branch = Integer.parseInt(br2.readLine());
+
+	            	   ingrediente1.getCuantity(ingredient, branch);
+
 	
 	                  break;
 	
 	              case 4:
-	
-	
+	            	  
+	            	  String nombre;
+	            	   System.out.println("Introduzca el nombre del  cliente que quiera consultar: ");
+	            	   nombre = br2.readLine();
+
+
+	            	   factura1.facturaCliente(nombre);
+
 	                  break;
 	
 	              case 5:
@@ -354,9 +371,59 @@ public class Logica {
       } else {
     	  
     	  while (comprobacion2 !=5) {
-    		  
+    				int opcion;
+    				System.out.println("MENU:");
+    				System.out.println("1. Opción 1");
+    				System.out.println("2. Opción 2");
+    				System.out.println("3. Opción 3");
+    				System.out.println("4. Opción 4");
+    				System.out.println("5. Salir");
+    				System.out.print("Elige una opción: ");
+    				try {
+    					opcion = Integer.parseInt(br2.readLine());
+    					switch (opcion) {
+    					case 1:
+    						System.out.println("Seleccionaste la Opción 1 (mostrar)");
+    						trabajador1.mostrar();
+    						break;
+    					case 2:
+    						System.out.println("Seleccionaste la Opción 2 (validarEdad)");
+    						trabajador1.validarEdad();
+    						break;
+    					case 3:
+    						System.out.println("Seleccionaste la Opción 3 (cambiarCargo)");
+    						System.out.println("Por favor, introduzca el nombre de usuario");
+    						Integer idSearch = Integer.parseInt(br2.readLine());
+    						System.out.println("Ahora, introduzca su cargo");
+    						String cargo = br2.readLine();
+    						System.out.println("Por último, introduzca el nuevo cargo");
+    						String nuevoCargo = br2.readLine();
+    						trabajador1.cambiarCargo(idSearch, cargo, nuevoCargo);
+    						trabajador1.update();
+    						break;
+    					case 4:
+    						System.out.println("Seleccionaste la Opción 4 (comparacionTrabajador)");
+    						trabajador1.compareTo(trabajador1);
+    						break;
+    					case 5:
+    						System.out.println("Saliendo de la funcion...");
+    						break;
+    					default:
+    						System.out.println("Opción no válida, intenta de nuevo.");
+    						break;
+    					}
+    				} catch (IOException e) {
+    					System.out.println("Error de entrada/salida: " + e.getMessage());
+    					opcion = 0; // Reiniciar la opción en caso de error
+    				} catch (NumberFormatException e) {
+    					System.out.println("Por favor ingresa un número válido.");
+    					opcion = 0; // Reiniciar la opción en caso de error
+    				}
+    				System.out.println(); // Línea en blanco para mejorar la legibilidad
+    			}
+
     	  }
 
       }
   }
-}
+

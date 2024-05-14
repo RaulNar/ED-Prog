@@ -32,11 +32,10 @@ public class Ingrediente implements CRUD {
         this.tipo_producto = tipo_producto;
         this.stock = stock;
     }
-
     public Ingrediente() {
-    }
-
-    @Override
+	
+	}
+	@Override
     public void read() {
         try (Connection conn = DriverManager.getConnection(url, "root", "");
              Statement st = conn.createStatement();
@@ -116,7 +115,39 @@ public class Ingrediente implements CRUD {
         System.out.println("id: " + this.id_ingrediente + ", tipo: " + this.id_plato + ", nombre: " + this.id_sucursal
                 + ", descripción: " + this.tipo_producto + ", precio: " + this.stock);
     }
+    
+    /**
+    * @Method getCuantity: a method that retrieves the stock of an id of an item. 
+    * @param ingrediente
+    * @param sucursal
+    */
+    public void getCuantity(String nombreIngrediente, Integer sucursal){
 
+
+       try (Connection conn = DriverManager.getConnection(url, "root", "");
+            Statement st = conn.createStatement();
+            ResultSet resultset = st.executeQuery("SELECT stock FROM ingrediente where nombre_ingrediente = '" + nombreIngrediente
+                    + "' and id_sucursal = " + sucursal)) {
+           if(resultset.next()) {
+
+
+               Integer cuantity = resultset.getInt("stock");
+
+
+               System.out.println("La cantidad de tipo de ingrediente seleccionado en la sucursal seleccionada es de: "
+                       + cuantity + " Kilogramos");
+
+
+           }
+           // For security reasons, we close connections.
+           resultset.close();
+           st.close();
+           conn.close();
+       } catch (SQLException e) {
+           System.out.println("Error en la conexión de la base de datos");
+           e.printStackTrace();
+       }
+    }
 
     // Getters and setters
     public Integer getId_ingrdiente() {

@@ -26,19 +26,8 @@ public class Main {
         Logica logica = new Logica();                          
 
 
-        /*
-         * Sucursal s1 = new Sucursal(1, "Los pollos hermanos", "C/Ramales", 954744444,
-         * "cosas@gmail.com", "09:00"); s1.mostrar();
-         *
-         * Plato pl1 = new Plato(1, "Pasta", "Spagetti Western",
-         * "Spaguetti con chille y carne, aderezado con queso Fiordo di bufalla",
-         * 15.25F); pl1.mostrar();
-         */
-
-        // Damos la bieenvenida y preguntamos si tiene un usuario o no, almacenamos un
-        // String (S/N);
-
-
+        
+       //Serie de métodos que definen el oden de ejecución
         bienvenida = logica.bienvenida();
         // Creamos o cargamos al usuario en un objeto Usuario.
         logica.ingreso(bienvenida);
